@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ApiFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="Api Fragment"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:gravity="center"
+
+        android:layout_gravity="top|center"/>
+
+    <androidx.appcompat.widget.SearchView
+        android:layout_marginTop="42dp"
+
+        android:id="@+id/search"
+        android:hint="Search"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"/>
+
+    <ProgressBar
+        android:id="@+id/progressBarAP"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="24dp"
+        android:layout_height="35dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="85dp"
+        android:indeterminate="true"
+        android:max="100"
+        android:padding="2dp"
+        android:progress="50"
+        android:visibility="invisible" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/Apirecyclerview"
+        android:layout_marginTop="130dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        /><!--
+    tools:listitem="@layout/detail_api_view"-->
+
+</FrameLayout>

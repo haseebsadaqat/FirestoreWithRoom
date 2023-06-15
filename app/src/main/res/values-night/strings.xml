@@ -1,8 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Task2Kotlin</string>
     <string name="Fragments">Fragments</string>
     <string name="enterabove">Enter Text Above</string>
-    <string name="fbsuccess">Added to Firebase</string>
     <string name="nothinmatched">Nothing matched</string>
     <string name="defaultvalue">default</string>
     <string name="dbname">my-database</string>

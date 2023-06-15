@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FirebaseFragment"
+    android:orientation="vertical">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+
+        <TextView
+            android:id="@+id/tvFirebase"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="top"
+            android:gravity="center"
+            android:text="Firebase Fragment"
+            android:textColor="@color/red"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/textFirebase"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Enter Text"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:layout_marginTop="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvFirebase" />
+
+        <Button
+            android:id="@+id/FirebaseDone"
+            android:onClick="FirebaseDone"
+            android:layout_marginTop="20dp"
+            android:text="Send to Firebase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textFirebase" />
+
+        <ProgressBar
+            android:id="@+id/progressBarFb"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="40dp"
+            android:layout_height="45dp"
+            android:indeterminate="true"
+            android:max="100"
+            android:padding="2dp"
+            android:progress="50"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/FirebaseDone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/FirebaseDone"
+            app:layout_constraintTop_toTopOf="@+id/FirebaseDone" />
+        <androidx.recyclerview.widget.RecyclerView
+            tools:listitem="@layout/detail_firebase_view"
+            android:layout_marginTop="10dp"
+            android:id="@+id/FirebaseRecycleView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/FirebaseDone" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

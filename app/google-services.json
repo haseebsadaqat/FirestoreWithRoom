@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "861215491212",
+    "project_id": "task2kotlin",
+    "storage_bucket": "task2kotlin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:861215491212:android:8a10126807865c6963a7a9",
+        "android_client_info": {
+          "package_name": "com.example.task2kotlin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "861215491212-k6p5b1uq49kpshptf164m080qk96dhvf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9PFrR-DgbnzlW7ua84DYl5I-Zy87w8A8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "861215491212-k6p5b1uq49kpshptf164m080qk96dhvf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

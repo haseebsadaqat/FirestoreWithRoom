@@ -1,0 +1,29 @@
+package com.example.task2kotlin
+import android.content.ContentValues.TAG
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.view.get
+import androidx.recyclerview.widget.RecyclerView
+import com.example.task2kotlin.databinding.ActivityMainBinding
+import com.example.task2kotlin.databinding.DetailFirebaseViewBinding
+import com.example.task2kotlin.databinding.FragmentFirebaseBinding
+
+class RecycleAdapter(var nameslist:ArrayList<UserNamesModel>) : RecyclerView.Adapter<RecycleAdapter.myViewHolder>() {
+
+    inner class myViewHolder(val binding: DetailFirebaseViewBinding) : RecyclerView.ViewHolder(binding.root)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): myViewHolder {
+        val binding = DetailFirebaseViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return myViewHolder(binding)
+    }
+    override fun getItemCount(): Int {
+        return nameslist.size
+    }
+
+    override fun onBindViewHolder(holder: myViewHolder, position: Int) {
+        holder.binding.detailFirebaseShow.text=nameslist[position].name
+    }
+}
+

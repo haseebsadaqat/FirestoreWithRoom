@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <item
+            android:id="@+id/firebase"
+            android:icon="@drawable/firebase400"
+            android:title="Firebase"  />
+        <item
+            android:id="@+id/api"
+            android:icon="@drawable/api100"
+            android:title="ApI" />
+        <item
+            android:id="@+id/roomdb"
+            android:icon="@drawable/db100"
+            android:title="RoomDb" />
+
+</menu>

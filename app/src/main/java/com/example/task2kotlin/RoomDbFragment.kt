@@ -38,7 +38,7 @@ class RoomDbFragment : Fragment() {
 
         // Observe the LiveData from the ViewModel and update the adapter
         noteViewModel.getAllNotes().observe(viewLifecycleOwner) { notes ->
-            noteAdapter.updateNotes(notes)
+            noteAdapter.updateNotes(notes.reversed())
         }
         return view
     }
@@ -53,7 +53,7 @@ class RoomDbFragment : Fragment() {
                 binding.progressBarRM.visibility = View.INVISIBLE
             } else {
 
-                Toast.makeText(activity, getString(R.string.enterabove), Toast.LENGTH_SHORT).show()
+                binding.textRoom.setError(getString(R.string.emptyfield))
                 binding.progressBarRM.visibility = View.INVISIBLE
             }
 

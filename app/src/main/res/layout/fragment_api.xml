@@ -10,7 +10,7 @@
         android:layout_height="40dp"
         android:text="Api Fragment"
         android:textSize="24sp"
-        android:textColor="@color/black"
+        android:textColor="@color/red"
         android:gravity="center"
 
         android:layout_gravity="top|center"/>

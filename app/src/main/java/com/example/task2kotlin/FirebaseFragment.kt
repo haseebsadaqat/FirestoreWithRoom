@@ -35,6 +35,10 @@ class FirebaseFragment : Fragment() {
         viewModel = ViewModelProvider(this,ViewModelProvider.AndroidViewModelFactory(activity.application)).get(FirebaseViewModel::class.java)
 
         viewModel.InitializeFirebase()
+        binding.progressBarFb.visibility=View.VISIBLE
+        viewModel.reading(CommonKeys.CollectionName,binding)
+
+        //adding and recieving data
         binding.FirebaseDone.setOnClickListener(View.OnClickListener {
             binding.progressBarFb.visibility=View.VISIBLE
             if(!binding.textFirebase.text.isNullOrEmpty() && !binding.textFirebase.text.isNullOrBlank()){
@@ -43,8 +47,7 @@ class FirebaseFragment : Fragment() {
              viewModel.reading(CommonKeys.CollectionName,binding)
 
             }else{
-
-                Toast.makeText(getActivity(),getString(R.string.enterabove),Toast.LENGTH_LONG).show()
+                binding.textFirebase.setError(getString(R.string.emptyfield))
                 binding.progressBarFb.visibility=View.INVISIBLE
             }        })
     }

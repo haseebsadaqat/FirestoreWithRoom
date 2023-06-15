@@ -32,7 +32,8 @@ class FirebaseViewModel(application: Application) : AndroidViewModel(application
         val documentRef = collectionRef.document()
         // Create a data object for document
         val data = hashMapOf(
-            CommonKeys.fbusername to value.toString()
+            CommonKeys.fbusername to value.toString(),
+            "timestamp" to FieldValue.serverTimestamp()
         )
         // Set the data to the document
         documentRef.set(data)
@@ -52,7 +53,7 @@ class FirebaseViewModel(application: Application) : AndroidViewModel(application
         binding.FirebaseRecycleView.layoutManager = LinearLayoutManager(getApplication())
         val db = FirebaseFirestore.getInstance()
         val collectionRef = db.collection(collectionName)
-        collectionRef.orderBy(CommonKeys.fbusername, Query.Direction.ASCENDING).get()
+        collectionRef.orderBy(CommonKeys.TimeStamp, Query.Direction.DESCENDING).get()
             .addOnSuccessListener {
                 if (!it.isEmpty) {
                     binding.progressBarFb.visibility = View.INVISIBLE
@@ -83,7 +84,7 @@ class FirebaseViewModel(application: Application) : AndroidViewModel(application
                 }
 
             }.addOnFailureListener(OnFailureListener {
-                Toast.makeText(getApplication(), CommonKeys.failedAdd, Toast.LENGTH_LONG).show()
+                Toast.makeText(getApplication(), CommonKeys.FailedRead, Toast.LENGTH_LONG).show()
                 binding.progressBarFb.visibility = View.INVISIBLE
             })
         nameslist.clear()

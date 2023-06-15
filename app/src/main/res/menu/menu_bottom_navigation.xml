@@ -4,11 +4,11 @@
         <item
             android:id="@+id/firebase"
             android:icon="@drawable/firebase400"
-            android:title="Firebase"  />
+            android:title="FireBase"  />
         <item
             android:id="@+id/api"
-            android:icon="@drawable/api100"
-            android:title="ApI" />
+            android:icon="@drawable/restapi100"
+            android:title="API" />
         <item
             android:id="@+id/roomdb"
             android:icon="@drawable/db100"

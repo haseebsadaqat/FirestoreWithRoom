@@ -6,4 +6,6 @@
     <string name="nothinmatched">Nothing matched</string>
     <string name="defaultvalue">default</string>
     <string name="dbname">my-database</string>
+    <string name="emptyfield">empty value</string>
+
 </resources>

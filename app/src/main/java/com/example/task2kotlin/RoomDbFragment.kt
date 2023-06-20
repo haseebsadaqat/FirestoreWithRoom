@@ -15,7 +15,6 @@ import com.example.task2kotlin.databinding.FragmentRoomDbBinding
 
 class RoomDbFragment : Fragment() {
     private var Room_binding: FragmentRoomDbBinding? = null
-    private val binding get() = Room_binding!!
     private lateinit var noteViewModel: NoteViewModel
     private lateinit var noteAdapter: NoteAdapter
 
@@ -29,41 +28,52 @@ class RoomDbFragment : Fragment() {
     ): View? {
 
         Room_binding = FragmentRoomDbBinding.inflate(layoutInflater, container, false)
-        val view = binding.root
-        noteAdapter = NoteAdapter()
 
-        binding.RoomRecycleView.adapter = noteAdapter
-        binding.RoomRecycleView.layoutManager = LinearLayoutManager(activity)
-        noteViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
+        initialSetup()
 
         // Observe the LiveData from the ViewModel and update the adapter
-        noteViewModel.getAllNotes().observe(viewLifecycleOwner) { notes ->
-            noteAdapter.updateNotes(notes.reversed())
-        }
-        return view
+        observeRoomLiveData()
+        return Room_binding!!.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        binding.addToRoom.setOnClickListener(View.OnClickListener {
-            binding.progressBarRM.visibility = View.VISIBLE
-            if (!binding.textRoom.text.isNullOrEmpty() || !binding.textRoom.text.isNullOrBlank()) {
 
-                noteViewModel.insertNoteText(binding.textRoom.text.toString())
-                binding.progressBarRM.visibility = View.INVISIBLE
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Room_binding!!.addToRoom.setOnClickListener(View.OnClickListener {
+            Room_binding!!.progressBarRM.visibility = View.VISIBLE
+            if (!Room_binding!!.textRoom.text.isNullOrEmpty() || !Room_binding!!.textRoom.text.isNullOrBlank()) {
+
+                noteViewModel.insertNoteText(Room_binding!!.textRoom.text.toString())
+                Room_binding!!.progressBarRM.visibility = View.INVISIBLE
             } else {
 
-                binding.textRoom.setError(getString(R.string.emptyfield))
-                binding.progressBarRM.visibility = View.INVISIBLE
+                Room_binding!!.textRoom.setError(getString(R.string.emptyfield))
+                Room_binding!!.progressBarRM.visibility = View.INVISIBLE
             }
 
         })
-
     }
+
     override fun onPause() {
-        binding.progressBarRM.visibility = View.INVISIBLE
+        Room_binding!!.progressBarRM.visibility = View.INVISIBLE
         super.onPause()
     }
+
+    fun initialSetup(){
+        noteAdapter = NoteAdapter()
+        Room_binding!!.RoomRecycleView.adapter = noteAdapter
+        Room_binding!!.RoomRecycleView.layoutManager = LinearLayoutManager(activity)
+        noteViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
+    }
+    private fun observeRoomLiveData() {
+        noteViewModel.getAllNotes().observe(viewLifecycleOwner) { notes ->
+            noteAdapter.updateNotes(notes.reversed())
+        }
+    }
+
+
+
 
 
 }

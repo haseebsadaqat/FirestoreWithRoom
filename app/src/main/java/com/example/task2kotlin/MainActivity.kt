@@ -12,31 +12,18 @@ import com.example.task2kotlin.databinding.ActivityMainBinding
 import com.google.firebase.firestore.FirebaseFirestore
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    lateinit var db: FirebaseFirestore
-    val usernames: MutableMap<String,String> = mutableMapOf()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        db = FirebaseFirestore.getInstance()
-        val adapter = viewPagerAdapter(supportFragmentManager,lifecycle)
-        binding.viewpager.adapter = adapter
+        //set up View pager
+        initializePagerAdapter()
 
         //decorate bottom nav menu on swipe(viewpager)
-        binding.viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-            when(position){
-            0->binding.bottomNavigation.menu.findItem(R.id.firebase).setChecked(true)
-            2->binding.bottomNavigation.menu.findItem(R.id.roomdb).setChecked(true)
-            1-> binding.bottomNavigation.menu.findItem(R.id.api).setChecked(true)
-            else->binding.bottomNavigation.menu.findItem(R.id.firebase).setChecked(true)
-            }
-                super.onPageSelected(position)
-            }
-        })
-        //bottom nav
+        onSwipeFragmentDecorator()
+
+        //bottom navigation
         binding.bottomNavigation.setOnItemSelectedListener {
 
     when(it.itemId){
@@ -48,6 +35,27 @@ class MainActivity : AppCompatActivity() {
     }
     true
 }
+    }
+
+    private fun onSwipeFragmentDecorator() {
+        binding.viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                when(position){
+                    0->binding.bottomNavigation.menu.findItem(R.id.firebase).setChecked(true)
+                    2->binding.bottomNavigation.menu.findItem(R.id.roomdb).setChecked(true)
+                    1-> binding.bottomNavigation.menu.findItem(R.id.api).setChecked(true)
+                    else->binding.bottomNavigation.menu.findItem(R.id.firebase).setChecked(true)
+                }
+                super.onPageSelected(position)
+            }
+        })
+
+    }
+
+    private fun initializePagerAdapter() {
+        val adapter = viewPagerAdapter(supportFragmentManager,lifecycle)
+        binding.viewpager.adapter = adapter
+
     }
 
 }

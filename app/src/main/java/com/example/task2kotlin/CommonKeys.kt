@@ -12,5 +12,6 @@ companion object{
     const val Db_Name="my-database"
     const val defalutvalue="default"
     const val TimeStamp="timestamp"
+    const val ApiUrl="https://reqres.in/api/"
 }
 }

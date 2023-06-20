@@ -1,6 +1,4 @@
 package com.example.task2kotlin
-import android.content.ContentValues.TAG
-import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import androidx.lifecycle.*
@@ -17,21 +15,29 @@ class ApiViewModel : ViewModel() {
     private var temp = MutableLiveData<List<Data>>()
 
     //GetUserData
-    fun GetuserData(progressBarAP: ProgressBar) {
+    fun getUserData() : Boolean{
+        var output : Boolean=true
         RetrofitInstance.usersinterface.GetuserData().enqueue(object : Callback<usersData> {
 
             override fun onResponse(call: Call<usersData>, response: Response<usersData>) {
                 if (response.body() != null) {
                     usersLiveData.value = response.body()!!.data
-                    progressBarAP.visibility= View.INVISIBLE
+
                 } else {
+                    output=false
                     return
                 }
             }
 
             override fun onFailure(call: Call<usersData>, t: Throwable) {
+                output=false
+
             }
         })
+
+
+
+    return output
     }
 
     //observeUserLiveData
@@ -45,8 +51,11 @@ class ApiViewModel : ViewModel() {
         }
 
         //if user searching then filter data and return
+
+       if(!usersLiveData.value.isNullOrEmpty()){
         temp.value = usersLiveData.value
-        temp= temp.map { it.filter { it.first_name.contains(search, ignoreCase = true) } } as MutableLiveData<List<Data>>
+        temp= temp.map { it?.filter { it.first_name.contains(search, ignoreCase = true) } } as MutableLiveData<List<Data>>
+       }
         return temp
 
     }

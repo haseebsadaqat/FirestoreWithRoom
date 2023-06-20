@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView.OnQueryTextListener
 import android.widget.Toast
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.task2kotlin.Retrofit.ApiAdapter
@@ -15,56 +16,73 @@ import com.example.task2kotlin.databinding.FragmentApiBinding
 
 class ApiFragment : Fragment() {
     private var Api_binding: FragmentApiBinding? = null
-    private val binding get() = Api_binding!!
     private val apiAdapter=ApiAdapter()
     private var tempstring:String =CommonKeys.defalutvalue
-
+    lateinit var activity : LifecycleOwner
     companion object {
         fun newInstance() = ApiFragment()
     }
 
     private lateinit var viewModel: ApiViewModel
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Api_binding = FragmentApiBinding.inflate(layoutInflater,container,false)
 
-        val view = binding.root
-        return view
+        Api_binding = FragmentApiBinding.inflate(layoutInflater,container,false)
+        return Api_binding!!.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        val activity = requireNotNull(this.activity)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        //making progress bar visible on roomdb accessing
-        binding.progressBarAP.visibility=View.VISIBLE
+        initialSetup()
 
-        prepareRecyclerView()
+       var sucesOrFailure=viewModel.getUserData()
 
-        viewModel = ViewModelProvider(this)[ApiViewModel::class.java]
+        if(sucesOrFailure==true){
+            Api_binding!!.progressBarAP.visibility= View.INVISIBLE
+        }
+        //Observe if user data matches
+        onObserveQuerySearch()
+        //observe for if user data dont match
+        onObserveIfNotMatch()
+    }
+    private fun onObserveIfNotMatch() {
+        viewModel.observeUsersLiveData(tempstring).observe(activity, Observer { Data ->
 
-        viewModel.GetuserData(binding.progressBarAP)
+            if (Data.isEmpty()){
+                Toast.makeText(getActivity(),getString(R.string.nothinmatched),Toast.LENGTH_SHORT).show()
+            }
 
-        binding.search.setOnQueryTextListener(object : OnQueryTextListener,
+            apiAdapter.setMovieList(Data)
+
+        })
+    }
+
+    override fun onPause() {
+        Api_binding!!.progressBarAP.visibility=View.INVISIBLE
+        super.onPause()
+    }
+
+    private fun onObserveQuerySearch() {
+
+        Api_binding!!.search.setOnQueryTextListener(object : OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
 
-            return false
+                return false
             }
             override fun onQueryTextChange(newText: String?): Boolean {
 
-                //observing if user search
+                //observing if user searches
                 if(!newText.isNullOrEmpty()|| !newText.isNullOrBlank()){
                     tempstring=newText
 
-                    viewModel.observeUsersLiveData(tempstring).observe(activity, Observer { it->
+                    viewModel.observeUsersLiveData(tempstring).observe(activity, Observer { it ->
 
-                        if (it.isEmpty()){
-            Toast.makeText(getActivity(),getString(R.string.nothinmatched),Toast.LENGTH_SHORT).show()
+                        if (it.isNullOrEmpty()){
+                            Toast.makeText(getActivity(),getString(R.string.nothinmatched),Toast.LENGTH_SHORT).show()
 
                         }
                         apiAdapter.setMovieList(it)
@@ -85,28 +103,19 @@ class ApiFragment : Fragment() {
             }
 
         })
-        //observe for if user data dont match
-        viewModel.observeUsersLiveData(tempstring).observe(activity, Observer { Data ->
-
-            if (Data.isEmpty()){
-                Toast.makeText(getActivity(),getString(R.string.nothinmatched),Toast.LENGTH_SHORT).show()
-            }
-
-            apiAdapter.setMovieList(Data)
-
-        })
-
     }
-    //preparing recycler adapter
-     fun prepareRecyclerView() {
-        binding.Apirecyclerview.adapter=apiAdapter
-        binding.Apirecyclerview.layoutManager=LinearLayoutManager(activity)
-        }
 
-    //make progress bar invisible
-    override fun onPause() {
-        binding.progressBarAP.visibility=View.INVISIBLE
-        super.onPause()
+    private fun initialSetup() {
+        activity = requireNotNull(getActivity())
+        //making progress bar visible on roomdb accessing
+        Api_binding!!.progressBarAP.visibility=View.VISIBLE
+
+    //    prepareRecyclerView()
+        Api_binding!!.Apirecyclerview.adapter=apiAdapter
+        Api_binding!!.Apirecyclerview.layoutManager=LinearLayoutManager(requireContext())
+
+        viewModel = ViewModelProvider(this)[ApiViewModel::class.java]
+
     }
 
 

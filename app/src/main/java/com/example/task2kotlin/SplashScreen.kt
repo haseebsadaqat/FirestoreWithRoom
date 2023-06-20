@@ -12,10 +12,10 @@ class SplashScreen : AppCompatActivity() {
     lateinit var im: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        //splash screen 3 seconds
         val binding=ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //splash screen 3 seconds
         im = binding.splashimage
         val updateHandler = Handler()
         val runnable = Runnable {

@@ -6,11 +6,18 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.get
 import androidx.recyclerview.widget.RecyclerView
+import com.example.task2kotlin.Retrofit.Data
 import com.example.task2kotlin.databinding.ActivityMainBinding
 import com.example.task2kotlin.databinding.DetailFirebaseViewBinding
 import com.example.task2kotlin.databinding.FragmentFirebaseBinding
+import com.google.firebase.firestore.auth.User
 
-class RecycleAdapter(var nameslist:ArrayList<UserNamesModel>) : RecyclerView.Adapter<RecycleAdapter.myViewHolder>() {
+class RecycleAdapter : RecyclerView.Adapter<RecycleAdapter.myViewHolder>() {
+    private var fireBaseList = ArrayList<UserNamesModel>()
+    fun setFirebaseList(userList : List<UserNamesModel>){
+        this.fireBaseList = userList as ArrayList<UserNamesModel>
+        notifyDataSetChanged()
+    }
 
     inner class myViewHolder(val binding: DetailFirebaseViewBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -19,11 +26,11 @@ class RecycleAdapter(var nameslist:ArrayList<UserNamesModel>) : RecyclerView.Ada
         return myViewHolder(binding)
     }
     override fun getItemCount(): Int {
-        return nameslist.size
+     return fireBaseList.size
     }
 
     override fun onBindViewHolder(holder: myViewHolder, position: Int) {
-        holder.binding.detailFirebaseShow.text=nameslist[position].name
+        holder.binding.detailFirebaseShow.text=fireBaseList[position].name
     }
 }
 
